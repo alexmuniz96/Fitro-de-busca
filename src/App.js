@@ -1,25 +1,38 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
+import SearchInput from './SearchInput'
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default function App() {
+  const [info, setInfo] = useState({})
+  const [text, setText] = useState('')
 
-export default App;
+  useEffect(() => {
+    if (text) {
+      fetch(`https://kitsu.io/api/edge/anime?filter[text]=${text}`)
+        .then((response) => response.json())
+        .then((response) => {
+          setInfo(response)
+          console.log(response)
+        })
+    }
+  }, [text])
+
+  return (
+    <div>
+      <h1>Animes</h1>
+      <SearchInput
+        value={text}
+        onChange={(search) => setText(search)}
+      />
+      {info.data && (
+        < ul >
+          {info.data.map((anime) => (
+            <li key={anime.id}>
+              {anime.attributes.canonicalTitle}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div >
+  )
+}
