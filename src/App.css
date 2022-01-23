@@ -4,11 +4,16 @@
   box-sizing: border-box;
 }
 div{
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  padding-top: 30px;
-  width: 300px;
-  margin: 0 auto;
   text-align: center;
+}
+
+.anime-list{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  list-style: none;
+  grid-gap: 1.5rem;
+}
+
+.anime-list img{
+  max-width: 100%;
 }

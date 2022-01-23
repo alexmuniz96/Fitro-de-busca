@@ -8,7 +8,7 @@ export default function App() {
 
   useEffect(() => {
     if (text) {
-      fetch(`https://kitsu.io/api/edge/anime?filter[text]=${text}`)
+      fetch(`https://kitsu.io/api/edge/anime?filter[text]=${text}&page[limit]=12`)
         .then((response) => response.json())
         .then((response) => {
           setInfo(response)
@@ -25,9 +25,10 @@ export default function App() {
         onChange={(search) => setText(search)}
       />
       {info.data && (
-        < ul >
+        < ul className="anime-list" >
           {info.data.map((anime) => (
             <li key={anime.id}>
+              <img src={anime.attributes.posterImage.small} alt={anime.attributes.canonicalTitle} />
               {anime.attributes.canonicalTitle}
             </li>
           ))}
