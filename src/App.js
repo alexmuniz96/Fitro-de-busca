@@ -7,6 +7,7 @@ export default function App() {
   const [text, setText] = useState('')
 
   useEffect(() => {
+    setInfo({})
     if (text) {
       fetch(`https://kitsu.io/api/edge/anime?filter[text]=${text}&page[limit]=12`)
         .then((response) => response.json())
@@ -24,6 +25,9 @@ export default function App() {
         value={text}
         onChange={(search) => setText(search)}
       />
+      {text && !info.data && (
+        <span>Carregando ...</span>
+      )}
       {info.data && (
         < ul className="anime-list" >
           {info.data.map((anime) => (
